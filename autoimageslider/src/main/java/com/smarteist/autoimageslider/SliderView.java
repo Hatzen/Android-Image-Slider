@@ -199,6 +199,13 @@ public class SliderView extends FrameLayout
         mPagerIndicator.setCount(getAdapterItemsCount());
         mPagerIndicator.setDynamicCount(true);
         setCurrentPagePosition(0);
+            
+        // Workaround duplicate listeners as mentioned in: https://github.com/smarteist/Android-Image-Slider/issues/87#issuecomment-550355761
+        if (mSliderPager != null && mCircularSliderHandle != null){
+            mSliderPager.removeOnPageChangeListener(mCircularSliderHandle);
+        }
+        mCircularSliderHandle = new CircularSliderHandle(mSliderPager);
+        mSliderPager.addOnPageChangeListener(mCircularSliderHandle);
     }
 
     /**
